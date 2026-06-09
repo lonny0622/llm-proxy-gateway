@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Local Config (Contains sensitive API Keys)
+config.json
+
+# Built outputs
+dist/
+frontend/dist/
+
+# Logs and system files
+*.log
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# References and temp files
+.ref-moon-bridge/
+.ref-*/
+tmp/
+temp/
