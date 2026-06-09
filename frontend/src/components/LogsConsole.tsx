@@ -50,9 +50,12 @@ export const LogsConsole: React.FC<LogsConsoleProps> = ({ logs, onClear }) => {
               tagClass = 'out';
             }
 
-            const typeText = log.type === 'anthropic-to-openrouter'
-              ? 'Anthropic➔OpenRouter'
-              : 'OpenRouter➔Anthropic';
+            const typeLabels: Record<string, string> = {
+              'anthropic-to-openrouter': 'Anthropic➔OpenRouter',
+              'openrouter-to-anthropic': 'OpenRouter➔Anthropic',
+              'responses-to-chat-completions': 'Responses➔ChatCompletions',
+            };
+            const typeText = typeLabels[log.type] || log.type;
 
             let summaryText = '';
             if (log.error) {
