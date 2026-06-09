@@ -17,7 +17,6 @@ export function convertAnthropicToOpenRouterRequest(anthropicBody: any, modelMap
     stream,
     temperature,
     top_p,
-    top_k,
     stop_sequences,
     tools,
     tool_choice
@@ -254,7 +253,7 @@ export function cleanMessagesForAnthropic(messages: OpenRouterMessage[]): { syst
         let parsedInput = {};
         try {
           parsedInput = typeof tc.function?.arguments === 'string' ? JSON.parse(tc.function.arguments) : (tc.function?.arguments || {});
-        } catch (e) {}
+        } catch {}
         blocks.push({
           type: 'tool_use',
           id: tc.id,
@@ -355,7 +354,7 @@ export function convertOpenRouterToAnthropicResponse(openRouterJson: any, model:
       let parsedInput = {};
       try {
         parsedInput = typeof tc.function?.arguments === 'string' ? JSON.parse(tc.function.arguments) : (tc.function?.arguments || {});
-      } catch (e) {}
+      } catch {}
       contentBlocks.push({
         type: 'tool_use',
         id: tc.id,
@@ -644,7 +643,7 @@ export async function handleOpenRouterToAnthropicStream(
             if (choice) {
               processOpenAIChoice(choice);
             }
-          } catch (err) {
+          } catch {
             // 忽略碎片块的 JSON 解析错误
           }
         }
@@ -667,7 +666,7 @@ export async function handleOpenRouterToAnthropicStream(
         if (choice) {
           processOpenAIChoice(choice);
         }
-      } catch (e) {}
+      } catch {}
     }
   }
 
@@ -892,7 +891,7 @@ export async function handleAnthropicToOpenRouterStream(
                   }
                 })}\n\n`);
               }
-            } catch (err) {
+            } catch {
               // 忽略解析错误
             }
           }

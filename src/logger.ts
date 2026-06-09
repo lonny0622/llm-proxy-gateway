@@ -51,7 +51,7 @@ export function addLog(
   for (const listener of logListeners) {
     try {
       listener(logItem);
-    } catch (err) {
+    } catch {
       // 容错处理，防止单监听器异常影响其他订阅
     }
   }

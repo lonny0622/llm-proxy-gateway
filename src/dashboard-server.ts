@@ -262,7 +262,7 @@ export function startDashboardServer() {
 
           const rawText = await response.text();
           let rawJson = {};
-          try { rawJson = JSON.parse(rawText); } catch(e) {}
+          try { rawJson = JSON.parse(rawText); } catch {}
 
           if (!response.ok) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -307,7 +307,7 @@ export function startDashboardServer() {
 
           const rawText = await response.text();
           let rawJson = {};
-          try { rawJson = JSON.parse(rawText); } catch(e) {}
+          try { rawJson = JSON.parse(rawText); } catch {}
 
           if (!response.ok) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -350,7 +350,7 @@ export function startDashboardServer() {
 
           const rawText = await response.text();
           let rawJson: any = {};
-          try { rawJson = JSON.parse(rawText); } catch(e) {}
+          try { rawJson = JSON.parse(rawText); } catch {}
 
           if (!response.ok) {
             res.writeHead(200, { 'Content-Type': 'application/json' });

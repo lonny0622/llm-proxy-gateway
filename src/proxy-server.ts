@@ -1,4 +1,4 @@
-import http, { IncomingMessage, ServerResponse } from 'http';
+import http, { IncomingMessage } from 'http';
 import { saveConfig } from './config.js';
 import { addLog } from './logger.js';
 import { ProxyConfig } from './types.js';
@@ -30,7 +30,7 @@ export async function readRequestBody(req: IncomingMessage): Promise<any> {
       if (!body.trim()) return resolve({});
       try {
         resolve(JSON.parse(body));
-      } catch (err) {
+      } catch {
         reject(new Error('请求体非合法的 JSON 格式'));
       }
     });
@@ -107,7 +107,9 @@ export function startProxy(proxy: ProxyConfig) {
         if (!response.ok) {
           const errText = await response.text();
           let errJson;
-          try { errJson = JSON.parse(errText); } catch(e) {}
+          try { errJson = JSON.parse(errText); } catch {
+            // 忽略解析错误
+          }
           
           const errorMsg = errJson?.error?.message || errText || 'OpenRouter API 错误';
           addLog(proxy.id, proxy.name, proxy.type, 'anthropic -> openrouter', anthropicReqBody, errJson || errText, response.status, errorMsg);
@@ -186,7 +188,9 @@ export function startProxy(proxy: ProxyConfig) {
         if (!response.ok) {
           const errText = await response.text();
           let errJson;
-          try { errJson = JSON.parse(errText); } catch(e) {}
+          try { errJson = JSON.parse(errText); } catch {
+            // 忽略解析错误
+          }
           
           const errorMsg = errJson?.error?.message || errText || 'Anthropic API 错误';
           addLog(proxy.id, proxy.name, proxy.type, 'openrouter -> anthropic', openRouterReqBody, errJson || errText, response.status, errorMsg);
@@ -264,7 +268,9 @@ export function startProxy(proxy: ProxyConfig) {
         if (!upstreamResp.ok) {
           const errText = await upstreamResp.text();
           let errJson: any;
-          try { errJson = JSON.parse(errText); } catch(e) {}
+          try { errJson = JSON.parse(errText); } catch {
+            // 忽略解析错误
+          }
 
           const errorMsg = errJson?.error?.message || errText || '上游 API 发生错误';
           addLog(proxy.id, proxy.name, proxy.type, 'responses -> chat/completions', responsesReqBody, errJson || errText, upstreamResp.status, errorMsg);

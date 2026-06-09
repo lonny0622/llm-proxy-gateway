@@ -448,7 +448,6 @@ export async function handleChatCompletionsStreamToResponsesStream(
   };
 
   // 状态指针和临时缓冲区
-  const contentText: Record<number, string> = {};
   const toolCallArgs: Record<number, string> = {};
   const toolCallNames: Record<number, string> = {};
   const toolCallIds: Record<number, string> = {};
@@ -811,7 +810,9 @@ export async function handleChatCompletionsStreamToResponsesStream(
         }
         const choice = data.choices?.[0];
         if (choice) processChoice(choice);
-      } catch {}
+      } catch {
+        // 忽略解析错误
+      }
     }
   }
 
